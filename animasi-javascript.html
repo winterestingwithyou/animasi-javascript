@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Animasi Karakter Bergerak</title>
+  <style>
+    canvas {
+      border: 2px solid #333;
+      background-color: #f0f0f0;
+      display: block;
+      margin: auto;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="myCanvas" width="600" height="300"></canvas>
+
+<script>
+  const canvas = document.getElementById("myCanvas");
+  const ctx = canvas.getContext("2d");
+
+  // Karakter berbentuk lingkaran dengan mata (sederhana)
+  let x = 50;
+  let y = 150;
+  let radius = 20;
+  let speed = 2;
+  let direction = 1; // 1 = kanan, -1 = kiri
+
+  function drawCharacter() {
+    // Wajah
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, Math.PI * 2);
+    ctx.fillStyle = "orange";
+    ctx.fill();
+    ctx.closePath();
+
+    // Mata
+    ctx.beginPath();
+    ctx.arc(x - 7, y - 5, 3, 0, Math.PI * 2);
+    ctx.arc(x + 7, y - 5, 3, 0, Math.PI * 2);
+    ctx.fillStyle = "black";
+    ctx.fill();
+    ctx.closePath();
+  }
+
+  function update() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawCharacter();
+
+    x += speed * direction;
+
+    // Jika menyentuh batas kanan/kiri, ubah arah
+    if (x + radius >= canvas.width || x - radius <= 0) {
+      direction *= -1;
+    }
+
+    requestAnimationFrame(update);
+  }
+
+  update(); // Mulai animasi
+</script>
+
+</body>
+</html>
